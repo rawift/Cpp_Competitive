@@ -16,3 +16,5 @@ int main() {
     cin>>t;
     while(t--) accept_ho_ja();
 }
+
+// link-https://www.codechef.com/practice/course/4-star-difficulty-problems/DIFF1900/problems/DIVREC
