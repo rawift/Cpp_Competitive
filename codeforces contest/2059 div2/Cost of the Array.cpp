@@ -176,10 +176,49 @@ void printV(vector<int>& arr){
     for(auto i:arr) cout<<i<<" ";
     cout<<endl;
 }
+
+int disctV(vector<int>& arr){
+    int n=arr.size();
+    set<int> s={arr.begin(),arr.end()};
+    return s.size();
+}
+
+void accept_ho_ja(){
+    int n,k;
+    cin>>n>>k;
+    vector<int> arr(n,0);
+    for(int i=0; i<n; i++) cin>>arr[i];
+    
+    if(n==k){
+        for(int i=1; i<n; i+=2){
+            if(i/2+1!=arr[i]){
+                cout<<i/2+1<<endl;
+                return;
+            }
+        }
+        cout<<n/2+1<<endl;
+        return;
+    }else{
+        for(int i=1; i<=n-k+1; i++){
+            if(arr[i]!=1){
+                cout<<1<<endl;
+                return;
+            }
+        }
+        cout<<2<<endl;
+        return;
+    }
+}
  
 
 signed main(){
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   
+  int t;
+  cin>>t;
+  while(t--) accept_ho_ja();
+  
 }
+
+// link-https://codeforces.com/contest/2059/problem/B

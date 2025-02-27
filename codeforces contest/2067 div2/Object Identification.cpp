@@ -176,10 +176,59 @@ void printV(vector<int>& arr){
     for(auto i:arr) cout<<i<<" ";
     cout<<endl;
 }
+
+ll ask(ll i, ll j){
+    cout<< "? "<<i<< " "<<j<<endl;
+    ll dis;
+    cin >> dis;
+    return dis;
+}
+
+void accept_ho_ja(){
+    int n;
+    cin>>n;
+    vector<int> x(n,0);
+    vector<int> freq(n+1,0);
+    vector<int> idx(n+1,0);
+    for(int i=0; i<n; i++) cin>>x[i];
+    for(int i=0; i<n; i++){
+        freq[x[i]]++;
+        idx[x[i]]=i+1;
+    }
+    for(int i=1; i<=n; i++){
+        if(freq[i]==0){
+            ll dis=ask(i,i%n+1);
+            if(dis==0){
+                cout<<"! A"<<endl;
+                return;
+            }else{
+                cout<<"! B"<<endl;
+                return;
+            }
+        }
+    }
+    
+    
+    ll dis=ask(idx[1],idx[n]);
+    ll dis2=ask(idx[n],idx[1]);
+    if(dis>=n) cout<<"! B"<<endl;
+    else if (dis<n-1) cout<<"! A"<<endl;
+    else if (dis2==dis) cout<<"! B"<<endl;
+    else cout<<"! A"<<endl;
+    
+    
+}
  
 
 signed main(){
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   
+  int t;
+  cin>>t;
+  while(t--) accept_ho_ja();
+  
 }
+
+
+// https://codeforces.com/contest/2067/problem/D

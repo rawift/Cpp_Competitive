@@ -176,10 +176,51 @@ void printV(vector<int>& arr){
     for(auto i:arr) cout<<i<<" ";
     cout<<endl;
 }
+
+int disctV(vector<int>& arr){
+    int n=arr.size();
+    set<int> s={arr.begin(),arr.end()};
+    return s.size();
+}
+
+void accept_ho_ja(){
+    int n;
+    cin>>n;
+    vector<int> a(n);
+    vector<int> b(n);
+    for(int i=0; i<n; i++) cin>>a[i];
+    for(int i=0; i<n; i++) cin>>b[i];
+    
+    if(disctV(a)>=3){
+        cout<<"YES"<<endl;
+        return;
+    }
+    
+    if(disctV(a)==2 && disctV(b)>=2){
+        cout<<"YES"<<endl;
+        return;
+    }
+    
+    if(disctV(a)==1 && disctV(b)>=3){
+        cout<<"YES"<<endl;
+        return;
+    }
+    
+    cout<<"NO"<<endl;
+    
+    return;
+    
+}
  
 
 signed main(){
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   
+  int t;
+  cin>>t;
+  while(t--) accept_ho_ja();
+  
 }
+
+// https://codeforces.com/contest/2059/problem/A
