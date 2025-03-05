@@ -172,10 +172,20 @@ bool isPresentInV(vector<int>& arr, int target) {
     return false;  
 }
 
+int countDigits(int num) {
+    if (num == 0) return 1;  // Special case: 0 has 1 digit
+    return floor(log10(abs(num))) + 1;
+}
+
 void printV(vector<int>& arr){
     for(auto i:arr) cout<<i<<" ";
     cout<<endl;
 }
+
+void sortV(vector<int>& arr){
+    sort(arr.begin(),arr.end());
+}
+
  
 
 signed main(){
