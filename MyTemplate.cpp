@@ -186,10 +186,67 @@ void sortV(vector<int>& arr){
     sort(arr.begin(),arr.end());
 }
 
- 
+
+void buildTree(vector<int>& arr, vector<ll>& tree, int s, int e, int idx){
+    
+    if(s==e){
+        tree[idx]=arr[s];
+        return;
+    }
+    
+    int mid=(s+e)/2;
+    
+    buildTree(arr,tree,s,mid,2*idx);
+    buildTree(arr,tree,mid+1,e,2*idx+1);
+    
+    tree[idx]=tree[2*idx]&tree[2*idx+1];
+}
+
+
+int query(vector<ll>& tree ,int s, int e, int idx, int l, int r){
+    
+    
+    if(e<l||s>r) return -1;
+
+    if(s>=l && e<=r) return tree[idx];
+    
+    int mid=(s+e)/2;
+    
+    int ans1=query(tree,s,mid,2*idx,l,r);
+    int ans2=query(tree,mid+1,e,2*idx+1,l,r);
+    
+    return ans1&ans2;
+}
+
+void updateTree(vector<int>& arr, vector<ll>& tree, int s, int e, int idx, int i, int val){
+    
+    if(s==e){
+        arr[i]=val;
+        tree[idx]=val;
+        return;
+    }
+    
+    int mid=(s+e)/2;
+    
+    if(i>mid) updateTree(arr,tree,mid+1,e,2*idx+1,i,val);
+    else updateTree(arr,tree,s,mid,2*idx,i,val);
+    
+    tree[idx]=tree[2*idx]&tree[2*idx+1];
+} 
+
+
+
+void accept_ho_ja(){
+    // vector<ll> tree(4 * n);;
+    // buildTree(arr,tree,0,n-1,1);
+    // query(tree,0,n-1,1,l,r);
+    // updateTree(arr,tree,0,n-1,1,l,r);
+}
 
 signed main(){
   ios_base::sync_with_stdio(false);
   cin.tie(0);
-  
+  int t;
+  cin>>t;
+  while(t--) accept_ho_ja();
 }
