@@ -176,6 +176,15 @@ int countDigits(int num) {
     if (num == 0) return 1;  // Special case: 0 has 1 digit
     return floor(log10(abs(num))) + 1;
 }
+int countTrailingZeros(int n) {
+    int cnt = 0;
+    while (n > 0 && n % 10 == 0) {  // loop as long as last digit is 0
+        cnt++;
+        n /= 10;
+    }
+    return cnt;
+}
+
 
 void printV(vector<int>& arr){
     for(auto i:arr) cout<<i<<" ";
@@ -234,13 +243,62 @@ void updateTree(vector<int>& arr, vector<ll>& tree, int s, int e, int idx, int i
     tree[idx]=tree[2*idx]&tree[2*idx+1];
 } 
 
+void dfs(vector<vector<int>>& graph, map<pair<int,int>,int>& pos, vector<int>& vis, int& ans, int root, int prevpos, int prevans){
+    vis[root]=1;
+    ans=max(ans,prevans);
+    for(auto i:graph[root]){
+        if(!vis[i]){
+            int ps=pos[{root,i}];
+            dfs(graph,pos,vis,ans,i,ps,prevans+(ps<prevpos));
+        }
+    }
+}
 
+pair<int,int> count5n0(int num){
+    int temp=num;
+    int c5=0, c2=0;
+    while(temp && temp%5==0){
+        c5++;
+        temp/=5;
+    }
+    while(temp && temp%2==0){
+        c2++;
+        temp/=2;
+    }
+    return {c2,c5};
+}
 
 void accept_ho_ja(){
     // vector<ll> tree(4 * n);;
     // buildTree(arr,tree,0,n-1,1);
     // query(tree,0,n-1,1,l,r);
     // updateTree(arr,tree,0,n-1,1,l,r);
+    
+    int n,m;
+    cin>>n>>m;
+    
+    pair<int,int> c5n0=count5n0(n);
+
+    int diff=abs(c5n0.first-c5n0.second);
+    int fac=c5n0.first>c5n0.second?5:2;
+    if(c5n0.first==c5n0.second) fac=10;
+    int k=1;
+    
+    while(true){
+        if(diff>0){
+            diff--;
+            if(k*fac>m) break;
+            k*=fac;
+        }else{
+            if(k*10>m) break;
+            k*=10;
+        }
+    }
+    
+    int mul=m/k;
+    k*=mul;
+    
+    cout<<n*k<<endl;
 }
 
 signed main(){
@@ -250,3 +308,5 @@ signed main(){
   cin>>t;
   while(t--) accept_ho_ja();
 }
+
+// link-https://codeforces.com/problemset/problem/1759/D

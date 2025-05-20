@@ -234,13 +234,43 @@ void updateTree(vector<int>& arr, vector<ll>& tree, int s, int e, int idx, int i
     tree[idx]=tree[2*idx]&tree[2*idx+1];
 } 
 
-
+void dfs(vector<vector<int>>& graph, map<pair<int,int>,int>& pos, vector<int>& vis, int& ans, int root, int prevpos, int prevans){
+    vis[root]=1;
+    ans=max(ans,prevans);
+    for(auto i:graph[root]){
+        if(!vis[i]){
+            int ps=pos[{root,i}];
+            dfs(graph,pos,vis,ans,i,ps,prevans+(ps<prevpos));
+        }
+    }
+}
 
 void accept_ho_ja(){
     // vector<ll> tree(4 * n);;
     // buildTree(arr,tree,0,n-1,1);
     // query(tree,0,n-1,1,l,r);
     // updateTree(arr,tree,0,n-1,1,l,r);
+    
+    int n,m;
+    cin>>n>>m;
+    vector<int> arr(n+1,n+1);
+    for(int i=0; i<m; i++){
+        int u,v;
+        cin>>u>>v;
+        int mini=min(u,v), maxi=max(u,v);
+        arr[mini]=min(arr[mini],maxi);
+    }
+    
+
+    vector<int> suff(n+2,n+1);
+
+    for(int i=n; i>=1; i--) suff[i]=min(suff[i+1],arr[i]-1);
+        
+    
+    int ans=0;
+    for(int i=1; i<=n; i++) ans+=(suff[i]-i+1);
+   
+    cout<<ans<<endl;
 }
 
 signed main(){
@@ -250,3 +280,5 @@ signed main(){
   cin>>t;
   while(t--) accept_ho_ja();
 }
+
+// link- https://codeforces.com/problemset/problem/1771/B

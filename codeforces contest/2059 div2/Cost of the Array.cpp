@@ -172,81 +172,53 @@ bool isPresentInV(vector<int>& arr, int target) {
     return false;  
 }
 
-int countDigits(int num) {
-    if (num == 0) return 1;  // Special case: 0 has 1 digit
-    return floor(log10(abs(num))) + 1;
-}
-
 void printV(vector<int>& arr){
     for(auto i:arr) cout<<i<<" ";
     cout<<endl;
 }
 
-void sortV(vector<int>& arr){
-    sort(arr.begin(),arr.end());
+int disctV(vector<int>& arr){
+    int n=arr.size();
+    set<int> s={arr.begin(),arr.end()};
+    return s.size();
 }
-
-
-void buildTree(vector<int>& arr, vector<ll>& tree, int s, int e, int idx){
-    
-    if(s==e){
-        tree[idx]=arr[s];
-        return;
-    }
-    
-    int mid=(s+e)/2;
-    
-    buildTree(arr,tree,s,mid,2*idx);
-    buildTree(arr,tree,mid+1,e,2*idx+1);
-    
-    tree[idx]=tree[2*idx]&tree[2*idx+1];
-}
-
-
-int query(vector<ll>& tree ,int s, int e, int idx, int l, int r){
-    
-    
-    if(e<l||s>r) return -1;
-
-    if(s>=l && e<=r) return tree[idx];
-    
-    int mid=(s+e)/2;
-    
-    int ans1=query(tree,s,mid,2*idx,l,r);
-    int ans2=query(tree,mid+1,e,2*idx+1,l,r);
-    
-    return ans1&ans2;
-}
-
-void updateTree(vector<int>& arr, vector<ll>& tree, int s, int e, int idx, int i, int val){
-    
-    if(s==e){
-        arr[i]=val;
-        tree[idx]=val;
-        return;
-    }
-    
-    int mid=(s+e)/2;
-    
-    if(i>mid) updateTree(arr,tree,mid+1,e,2*idx+1,i,val);
-    else updateTree(arr,tree,s,mid,2*idx,i,val);
-    
-    tree[idx]=tree[2*idx]&tree[2*idx+1];
-} 
-
-
 
 void accept_ho_ja(){
-    // vector<ll> tree(4 * n);;
-    // buildTree(arr,tree,0,n-1,1);
-    // query(tree,0,n-1,1,l,r);
-    // updateTree(arr,tree,0,n-1,1,l,r);
+    int n,k;
+    cin>>n>>k;
+    vector<int> arr(n,0);
+    for(int i=0; i<n; i++) cin>>arr[i];
+    
+    if(n==k){
+        for(int i=1; i<n; i+=2){
+            if(i/2+1!=arr[i]){
+                cout<<i/2+1<<endl;
+                return;
+            }
+        }
+        cout<<n/2+1<<endl;
+        return;
+    }else{
+        for(int i=1; i<=n-k+1; i++){
+            if(arr[i]!=1){
+                cout<<1<<endl;
+                return;
+            }
+        }
+        cout<<2<<endl;
+        return;
+    }
 }
+ 
 
 signed main(){
   ios_base::sync_with_stdio(false);
   cin.tie(0);
+  
   int t;
   cin>>t;
   while(t--) accept_ho_ja();
+  
 }
+
+// link-https://codeforces.com/contest/2059/problem/B
