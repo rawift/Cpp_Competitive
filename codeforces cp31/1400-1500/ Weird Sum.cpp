@@ -245,19 +245,62 @@ int cmppair(pair<int,int>& a, pair<int,int>& b){
     // return a.first<b.first; // ascending order of first element
 }
 
-
-
 void accept_ho_ja(){
     // vector<ll> tree(4 * n);;
     // buildTree(arr,tree,0,n-1,1);
     // query(tree,0,n-1,1,l,r);
     // updateTree(arr,tree,0,n-1,1,l,r);
+    int n,m;
+    cin>>n>>m;
+    vector<vector<int>> grid(n,vector<int>(m));
+    for(int i=0; i<n; i++){
+        for(int j=0; j<m; j++) cin>>grid[i][j];
+    }
+    
+    
+   map<int,vector<pair<int,int>>> mp;
+
+   for(int i=0; i<n; i++){
+       for(int j=0; j<m; j++) mp[grid[i][j]].emplace_back(i,j);
+   }
+   
+   int ans=0;
+   for(auto i:mp){
+       vector<pair<int,int>> val=i.second;
+       
+       
+       sort(val.begin(), val.end());
+       int sum1=val[0].first, n1=val.size();
+       vector<int> prev1(n1,0);
+       for(int i=1; i<n1; i++){
+           prev1[i]=val[i].first*i-sum1;
+           sum1+=val[i].first;
+       }
+       
+       sort(val.begin(), val.end(), cmppair);
+       int sum2=val[0].second, n2=val.size();
+       vector<int> prev2(n2,0);
+       for(int i=1; i<n2; i++){
+           prev2[i]=val[i].second*i-sum2;
+           sum2+=val[i].second;
+       }
+       
+      
+       for(int i=0; i<n1; i++) ans+=prev1[i]+prev2[i];
+      
+       
+   }
+ 
+   cout<<ans<<endl;
 }
 
 signed main(){
   ios_base::sync_with_stdio(false);
   cin.tie(0);
   int t;
-  cin>>t;
-  while(t--) accept_ho_ja();
+  //cin>>t;
+  accept_ho_ja();
 }
+
+
+//linl - https://codeforces.com/problemset/problem/1648/A
